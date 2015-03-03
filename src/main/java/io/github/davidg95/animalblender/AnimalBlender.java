@@ -20,7 +20,7 @@ import java.util.List;
  * given radius.
  *
  * @author David
- * @version 0.2
+ * @version 0.3
  */
 public class AnimalBlender extends JavaPlugin {
 
