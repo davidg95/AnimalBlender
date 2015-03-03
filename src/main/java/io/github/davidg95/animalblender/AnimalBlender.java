@@ -162,6 +162,29 @@ public class AnimalBlender extends JavaPlugin {
                                 }
                             }
                         }
+                    } else if (animal.equals("sheep")) {
+                        for (int i = 0; i <= (list.size() - 1); i++) {
+                            if (list.get(i) instanceof Sheep) {
+                                Sheep sheep = (Sheep) list.get(i);
+                                Location sheepLoc = sheep.getLocation();
+                                Location playerLoc = player.getLocation();
+
+                                int sheepX = sheepLoc.getBlockX();
+                                int sheepY = sheepLoc.getBlockY();
+
+                                int playerX = playerLoc.getBlockX();
+                                int playerY = playerLoc.getBlockY();
+
+                                int xDif = sheepX - playerX;
+                                int yDif = sheepY - playerY;
+
+                                if (xDif >= -radius && xDif <= radius) {
+                                    if (yDif >= -radius && yDif <= radius) {
+                                        sheep.remove();
+                                    }
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
