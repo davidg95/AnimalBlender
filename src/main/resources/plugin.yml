@@ -1,0 +1,9 @@
+name: AnimalBlender
+main: io.github.davidg95.animalblender.AnimalBlender
+version: 0.2
+commands:
+   blend:
+      description: Blend animals
+      usage: /<command> <animal> <radius>
+      permission: AnimalBlender.blend
+      permission-message: You don't have <permission>
