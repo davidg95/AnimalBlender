@@ -20,7 +20,7 @@ import java.util.List;
  * given radius.
  *
  * @author David
- * @version 0.5
+ * @version 0.6
  */
 public class AnimalBlender extends JavaPlugin {
 
@@ -113,8 +113,10 @@ public class AnimalBlender extends JavaPlugin {
 
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
-                                        squid.remove();
-                                        count++;
+                                        if (squid.getCustomName().equals(null)) {
+                                            squid.remove();
+                                            count++;
+                                        }
                                     }
                                 }
                             }
@@ -138,8 +140,10 @@ public class AnimalBlender extends JavaPlugin {
 
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
-                                        cow.remove();
-                                        count++;
+                                        if (cow.getCustomName().equals(null)) {
+                                            cow.remove();
+                                            count++;
+                                        }
                                     }
                                 }
                             }
@@ -163,8 +167,10 @@ public class AnimalBlender extends JavaPlugin {
 
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
-                                        pig.remove();
-                                        count++;
+                                        if (pig.getCustomName().equals(null)) {
+                                            pig.remove();
+                                            count++;
+                                        }
                                     }
                                 }
                             }
@@ -188,8 +194,10 @@ public class AnimalBlender extends JavaPlugin {
 
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
-                                        chicken.remove();
-                                        count++;
+                                        if (chicken.getCustomName().equals(null)) {
+                                            chicken.remove();
+                                            count++;
+                                        }
                                     }
                                 }
                             }
@@ -213,8 +221,10 @@ public class AnimalBlender extends JavaPlugin {
 
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
-                                        sheep.remove();
-                                        count++;
+                                        if (sheep.getCustomName().equals(null)) {
+                                            sheep.remove();
+                                            count++;
+                                        }
                                     }
                                 }
                             }
