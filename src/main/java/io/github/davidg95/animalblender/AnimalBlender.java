@@ -20,7 +20,7 @@ import java.util.List;
  * given radius.
  *
  * @author David
- * @version 0.3
+ * @version 0.4
  */
 public class AnimalBlender extends JavaPlugin {
 
@@ -36,29 +36,36 @@ public class AnimalBlender extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (args.length > 2) {
-            sender.sendMessage("Too many arguments!");
-            return false;
-        } else if (args.length < 2) {
-            sender.sendMessage("Not enough arguments!");
-            return false;
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("You must be a player to use this command!");
+            return true;
         } else {
-            if (cmd.getName().equalsIgnoreCase("blend")) {
-                //Check if it is a player
-                if (!(sender instanceof Player)) {
-                    sender.sendMessage("You must be a player to use this command!");
-                    return true;
+            if (args.length > 2) {
+                sender.sendMessage("Too many arguments!");
+                return false;
+            } else if (args.length < 2) {
+                sender.sendMessage("Not enough arguments!");
+                return false;
+            } else {
+                if (cmd.getName().equalsIgnoreCase("blend")) {
                 } else {
                     String animal = args[0];
 
-                    int radius = Integer.parseInt(args[1]);
-
-                    if (radius > 16000) {
-                        Bukkit.broadcastMessage("Radius must be less than 1600!");
-                        return false;
-                    }
+                    int radius;
 
                     Player player = (Player) sender;
+
+                    try {
+                        radius = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException e) {
+                        player.sendMessage("You must type in a number between 0 and 1600 for the radius!");
+                        return false;
+                    }
+                    
+                    if (radius > 1600 || radius < 0) {
+                        Bukkit.broadcastMessage("Radius must be between 0 and 1600!");
+                        return false;
+                    }
 
                     World world = player.getWorld();
 
@@ -66,10 +73,12 @@ public class AnimalBlender extends JavaPlugin {
 
                     list = world.getEntities();
 
+                    int count = 0;
+
                     if (animal.equals("rabbits")) {
-                        Bukkit.broadcastMessage("Emma would murder you if you did that...");
+                        player.sendMessage("Emma would murder you if you did that...");
                     } else if (animal.equals("horses")) {
-                        Bukkit.broadcastMessage("Emma would murder you if you did that...");
+                        player.sendMessage("Emma would murder you if you did that...");
                     } else if (animal.equals("squid")) {
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Squid) {
@@ -89,10 +98,12 @@ public class AnimalBlender extends JavaPlugin {
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
                                         squid.remove();
+                                        count++;
                                     }
                                 }
                             }
                         }
+                        player.sendMessage("You have blended " + count + " squid.");
                     } else if (animal.equals("cows")) {
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Cow) {
@@ -112,10 +123,12 @@ public class AnimalBlender extends JavaPlugin {
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
                                         cow.remove();
+                                        count++;
                                     }
                                 }
                             }
                         }
+                        player.sendMessage("You have blended " + count + " cows.");
                     } else if (animal.equals("pigs")) {
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Pig) {
@@ -135,10 +148,12 @@ public class AnimalBlender extends JavaPlugin {
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
                                         pig.remove();
+                                        count++;
                                     }
                                 }
                             }
                         }
+                        player.sendMessage("You have blended " + count + " pigs.");
                     } else if (animal.equals("chickens")) {
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Chicken) {
@@ -158,10 +173,12 @@ public class AnimalBlender extends JavaPlugin {
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
                                         chicken.remove();
+                                        count++;
                                     }
                                 }
                             }
                         }
+                        player.sendMessage("You have blended " + count + " chickens.");
                     } else if (animal.equals("sheep")) {
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Sheep) {
@@ -181,10 +198,12 @@ public class AnimalBlender extends JavaPlugin {
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
                                         sheep.remove();
+                                        count++;
                                     }
                                 }
                             }
                         }
+                        player.sendMessage("You have blended " + count + " sheep.");
                     }
                     return true;
                 }
