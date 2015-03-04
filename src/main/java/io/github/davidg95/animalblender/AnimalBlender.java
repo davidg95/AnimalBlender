@@ -20,7 +20,7 @@ import java.util.List;
  * given radius.
  *
  * @author David
- * @version 0.4
+ * @version 0.5
  */
 public class AnimalBlender extends JavaPlugin {
 
@@ -34,6 +34,17 @@ public class AnimalBlender extends JavaPlugin {
 
     }
 
+    /**
+     * The onCommand method to listen for the /blend command is entered. if it
+     * is then it will take in the animal to be blended and the radius it will
+     * take effect in.
+     *
+     * @param sender the person who sent the command.
+     * @param cmd the command that was sent.
+     * @param label
+     * @param args any arguments that followed the command.
+     * @return returns true or false whether the command was carried out or not.
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         //Check to make sure the sender is a player
@@ -49,6 +60,7 @@ public class AnimalBlender extends JavaPlugin {
                 sender.sendMessage("Not enough arguments!");
                 return false;
             } else {
+                //Check the correct command was sent
                 if (cmd.getName().equalsIgnoreCase("blend")) {
                     String animal = args[0];
 
@@ -56,16 +68,18 @@ public class AnimalBlender extends JavaPlugin {
 
                     Player player = (Player) sender;
 
+                    //Check a number was entered for the radius
                     try {
                         radius = Integer.parseInt(args[1]);
                     } catch (NumberFormatException e) {
                         player.sendMessage("You must type in a number between 0 and 1600 for the radius!");
-                        return false;
+                        return true;
                     }
-                    
+
+                    //Check the radius sent is in range
                     if (radius > 1600 || radius < 0) {
                         Bukkit.broadcastMessage("Radius must be between 0 and 1600!");
-                        return false;
+                        return true;
                     }
 
                     World world = player.getWorld();
@@ -76,11 +90,12 @@ public class AnimalBlender extends JavaPlugin {
 
                     int count = 0;
 
-                    if (animal.equals("rabbits")) {
+                    //Check which animal was entered
+                    if (animal.equals("rabbits")) { //If rabbits was entered
                         player.sendMessage("Emma would murder you if you did that...");
-                    } else if (animal.equals("horses")) {
+                    } else if (animal.equals("horses")) { //If horses was entered
                         player.sendMessage("Emma would murder you if you did that...");
-                    } else if (animal.equals("squid")) {
+                    } else if (animal.equals("squid")) { //If squid was entered
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Squid) {
                                 Squid squid = (Squid) list.get(i);
@@ -105,7 +120,7 @@ public class AnimalBlender extends JavaPlugin {
                             }
                         }
                         player.sendMessage("You have blended " + count + " squid.");
-                    } else if (animal.equals("cows")) {
+                    } else if (animal.equals("cows")) { //IOf cows was entered
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Cow) {
                                 Cow cow = (Cow) list.get(i);
@@ -130,7 +145,7 @@ public class AnimalBlender extends JavaPlugin {
                             }
                         }
                         player.sendMessage("You have blended " + count + " cows.");
-                    } else if (animal.equals("pigs")) {
+                    } else if (animal.equals("pigs")) { //If pigs was entered
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Pig) {
                                 Pig pig = (Pig) list.get(i);
@@ -155,7 +170,7 @@ public class AnimalBlender extends JavaPlugin {
                             }
                         }
                         player.sendMessage("You have blended " + count + " pigs.");
-                    } else if (animal.equals("chickens")) {
+                    } else if (animal.equals("chickens")) { //If checkens was entered
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Chicken) {
                                 Chicken chicken = (Chicken) list.get(i);
@@ -180,7 +195,7 @@ public class AnimalBlender extends JavaPlugin {
                             }
                         }
                         player.sendMessage("You have blended " + count + " chickens.");
-                    } else if (animal.equals("sheep")) {
+                    } else if (animal.equals("sheep")) {  //If sheep was entered
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Sheep) {
                                 Sheep sheep = (Sheep) list.get(i);
@@ -205,6 +220,8 @@ public class AnimalBlender extends JavaPlugin {
                             }
                         }
                         player.sendMessage("You have blended " + count + " sheep.");
+                    } else { //If the animal or word was not recognised
+                        sender.sendMessage("You cannot blend that!");
                     }
                     return true;
                 }

@@ -1,6 +1,6 @@
 name: AnimalBlender
 main: io.github.davidg95.animalblender.AnimalBlender
-version: 0.4
+version: 0.5
 commands:
    blend:
       description: Blend animals
