@@ -36,10 +36,12 @@ public class AnimalBlender extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        //Check to make sure the sender is a player
         if (!(sender instanceof Player)) {
             sender.sendMessage("You must be a player to use this command!");
             return true;
         } else {
+            //Check the correct amount of arguments were sent
             if (args.length > 2) {
                 sender.sendMessage("Too many arguments!");
                 return false;
@@ -48,7 +50,6 @@ public class AnimalBlender extends JavaPlugin {
                 return false;
             } else {
                 if (cmd.getName().equalsIgnoreCase("blend")) {
-                } else {
                     String animal = args[0];
 
                     int radius;
