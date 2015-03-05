@@ -20,7 +20,7 @@ import java.util.List;
  * given radius.
  *
  * @author David
- * @version 0.6.2
+ * @version 1.0.0
  */
 public class AnimalBlender extends JavaPlugin {
 
@@ -72,14 +72,8 @@ public class AnimalBlender extends JavaPlugin {
                     try {
                         radius = Integer.parseInt(args[1]);
                     } catch (NumberFormatException e) {
-                        player.sendMessage("You must type in a number between 0 and 1600 for the radius!");
-                        return true;
-                    }
-
-                    //Check the radius sent is in range
-                    if (radius > 1600 || radius < 0) {
-                        Bukkit.broadcastMessage("Radius must be between 0 and 1600!");
-                        return true;
+                        player.sendMessage("You must type in a number above 0 for the radius!");
+                        return false;
                     }
 
                     World world = player.getWorld();
@@ -123,7 +117,7 @@ public class AnimalBlender extends JavaPlugin {
                             }
                         }
                         player.sendMessage("You have blended " + count + " squid.");
-                    } else if (animal.equals("cows")) { //IOf cows was entered
+                    } else if (animal.equals("cows")) { //If cows was entered
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Cow) {
                                 Cow cow = (Cow) list.get(i);
