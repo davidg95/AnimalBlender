@@ -85,11 +85,12 @@ public class AnimalBlender extends JavaPlugin {
                     int count = 0;
 
                     //Check which animal was entered
-                    if (animal.equals("rabbits")) { //If rabbits was entered
-                        player.sendMessage("Emma would murder you if you did that...");
-                    } else if (animal.equals("horses")) { //If horses was entered
-                        player.sendMessage("Emma would murder you if you did that...");
-                    } else if (animal.equals("squid")) { //If squid was entered
+                    /*if (animal.equals("rabbits")) { //If rabbits was entered
+                     player.sendMessage("Emma would murder you if you did that...");
+                     } else if (animal.equals("horses")) { //If horses was entered
+                     player.sendMessage("Emma would murder you if you did that...");
+                     } else*/
+                    if (animal.equals("squid")) { //If squid was entered
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Squid) {
                                 Squid squid = (Squid) list.get(i);
@@ -108,7 +109,7 @@ public class AnimalBlender extends JavaPlugin {
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
                                         String tag = squid.getCustomName();
-                                        if(tag == null){
+                                        if (tag == null) {
                                             squid.remove();
                                             count++;
                                         }
@@ -136,7 +137,7 @@ public class AnimalBlender extends JavaPlugin {
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
                                         String tag = cow.getCustomName();
-                                        if(tag == null){
+                                        if (tag == null) {
                                             cow.remove();
                                             count++;
                                         }
@@ -164,7 +165,7 @@ public class AnimalBlender extends JavaPlugin {
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
                                         String tag = pig.getCustomName();
-                                        if(tag == null){
+                                        if (tag == null) {
                                             pig.remove();
                                             count++;
                                         }
@@ -192,7 +193,7 @@ public class AnimalBlender extends JavaPlugin {
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
                                         String tag = chicken.getCustomName();
-                                        if(tag == null){
+                                        if (tag == null) {
                                             chicken.remove();
                                             count++;
                                         }
@@ -220,7 +221,7 @@ public class AnimalBlender extends JavaPlugin {
                                 if (xDif >= -radius && xDif <= radius) {
                                     if (yDif >= -radius && yDif <= radius) {
                                         String tag = sheep.getCustomName();
-                                        if(tag == null){
+                                        if (tag == null) {
                                             sheep.remove();
                                             count++;
                                         }
