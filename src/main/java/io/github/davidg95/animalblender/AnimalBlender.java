@@ -20,7 +20,7 @@ import java.util.List;
  * given radius.
  *
  * @author David
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class AnimalBlender extends JavaPlugin {
 
@@ -85,12 +85,11 @@ public class AnimalBlender extends JavaPlugin {
                     int count = 0;
 
                     //Check which animal was entered
-                    /*if (animal.equals("rabbits")) { //If rabbits was entered
+                    if (animal.equals("rabbits")) { //If rabbits was entered
                      player.sendMessage("Emma would murder you if you did that...");
                      } else if (animal.equals("horses")) { //If horses was entered
                      player.sendMessage("Emma would murder you if you did that...");
-                     } else*/
-                    if (animal.equals("squid")) { //If squid was entered
+                     } else if (animal.equals("squid")) { //If squid was entered
                         for (int i = 0; i <= (list.size() - 1); i++) {
                             if (list.get(i) instanceof Squid) {
                                 Squid squid = (Squid) list.get(i);
