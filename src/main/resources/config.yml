@@ -6,6 +6,7 @@ version: 1.2
 
 #The maximum allowed radius
 #This is bypassed with the animalblender.radiusbypass permission node.
+#0 to disable
 max-radius: 100
 
 #Plugin messages
@@ -16,3 +17,5 @@ messages:
     no-permission-entity: 'You do not have permission to blend that entity'
     no-permission: 'You do not have permission to use this command'
     radius-to-large: 'That radius is too large'
+    cant-despawn-that-entity: 'You cannot despawn that entity'
+    entity-not-found: 'That entity could not be found'

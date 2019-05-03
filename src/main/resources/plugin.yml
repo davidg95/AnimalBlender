@@ -4,4 +4,21 @@ version: 1.2
 commands:
    blend:
       description: Blend animals
-      usage: /<command> <animal> <radius>
+      usage: /<command> [animals] [radius]
+
+permissions:
+   animalblender.*:
+     description: Gives access to all commands and bypasses on this plugin
+     children:
+       animalblender.blend: true
+       animalblender.radiusbypass: true
+       animalblender.blend.*: true
+   animalblender.blend:
+     description: Allows use of the /blend command
+     default: true
+   animalblender.radiusbypass:
+     description: Allows bypassin the radius limit set in the config file
+     default: true
+   animalblender.blend.*:
+     description: Allows blending of all entity types
+     default: true
