@@ -1,0 +1,18 @@
+#Animal Blender v1.2
+#Made by Davidg95
+
+#Do not touch
+version: 1.2
+
+#The maximum allowed radius
+#This is bypassed with the animalblender.radiusbypass permission node.
+max-radius: 100
+
+#Plugin messages
+messages:
+    greater-than-zero: 'Must type in a number greater than 0!'
+    blended-entities: 'You have blended %amount %entity'
+    player-only-command: 'You must be a player to use this command!'
+    no-permission-entity: 'You do not have permission to blend that entity'
+    no-permission: 'You do not have permission to use this command'
+    radius-to-large: 'That radius is too large'

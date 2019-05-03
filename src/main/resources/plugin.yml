@@ -5,5 +5,3 @@ commands:
    blend:
       description: Blend animals
       usage: /<command> <animal> <radius>
-      permission: animalblender.blend
-      permission-message: You do not have permission to use this command

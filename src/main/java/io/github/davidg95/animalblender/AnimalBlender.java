@@ -12,6 +12,7 @@ import org.bukkit.entity.*;
 import org.bukkit.Location;
 
 import java.util.List;
+import org.bukkit.ChatColor;
 
 /**
  * Animal Blender plugin that despawns all animals of a given type within a
@@ -24,12 +25,21 @@ public class AnimalBlender extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+        saveDefaultConfig();
+        getLogger().info("Config file loaded");
     }
 
     @Override
     public void onDisable() {
 
+    }
+
+    public String colors(String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
+    }
+
+    public String getMessage(String message) {
+        return colors(getConfig().getString("messages." + message));
     }
 
     /**
@@ -50,62 +60,71 @@ public class AnimalBlender extends JavaPlugin {
             //Check to make sure the sender is a player
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                //Check the correct amount of arguments were sent
-                if (args.length > 2) {
-                    String animal = args[0];
+                if (player.hasPermission("animalblender.blend")) {
+                    //Check the correct amount of arguments were sent
+                    if (args.length >= 2) {
+                        String animal = args[0];
+                        if (player.hasPermission("animalblender.blend." + animal)) {
+                            int radius;
+                            //Check a number was entered for the radius
+                            try {
+                                radius = Integer.parseInt(args[1]);
+                                if (radius <= 0) {
+                                    player.sendMessage(getMessage("greater-than-zero"));
+                                    return true;
+                                } else if (radius >= getConfig().getInt("max-radius") && !player.hasPermission("animalblender.radiusbypass")) {
+                                    player.sendMessage(getMessage("radius-to-large"));
+                                    return true;
+                                }
+                            } catch (NumberFormatException e) {
+                                player.sendMessage(getMessage("greater-than-zero"));
+                                return true;
+                            }
 
-                    int radius;
-                    //Check a number was entered for the radius
-                    try {
-                        radius = Integer.parseInt(args[1]);
-                        if (radius <= 0) {
-                            player.sendMessage("You must type in a number above 0 for the radius!");
-                            return false;
-                        }
-                    } catch (NumberFormatException e) {
-                        player.sendMessage("You must type in a number above 0 for the radius!");
-                        return false;
-                    }
+                            List<Entity> entities = player.getWorld().getEntities();
 
-                    List<Entity> entities = player.getWorld().getEntities();
+                            int count = 0;
 
-                    int count = 0;
+                            //Check which animal was entered
+                            for (Entity e : entities) {
+                                if (e.getType() == EntityType.valueOf(animal.toUpperCase())) {
+                                    Location entityLocation = e.getLocation();
+                                    Location playerLocation = player.getLocation();
 
-                    //Check which animal was entered
-                    for (Entity e : entities) {
-                        if (e.getType() == EntityType.valueOf(animal)) {
-                            Location entityLocation = e.getLocation();
-                            Location playerLocation = player.getLocation();
+                                    int squidX = entityLocation.getBlockX();
+                                    int squidY = entityLocation.getBlockY();
 
-                            int squidX = entityLocation.getBlockX();
-                            int squidY = entityLocation.getBlockY();
+                                    int playerX = playerLocation.getBlockX();
+                                    int playerY = playerLocation.getBlockY();
 
-                            int playerX = playerLocation.getBlockX();
-                            int playerY = playerLocation.getBlockY();
+                                    int xDif = squidX - playerX;
+                                    int yDif = squidY - playerY;
 
-                            int xDif = squidX - playerX;
-                            int yDif = squidY - playerY;
-
-                            if (xDif >= -radius && xDif <= radius) {
-                                if (yDif >= -radius && yDif <= radius) {
-                                    String tag = e.getCustomName();
-                                    if (tag == null) {
-                                        e.remove();
-                                        count++;
+                                    if (xDif >= -radius && xDif <= radius) {
+                                        if (yDif >= -radius && yDif <= radius) {
+                                            String tag = e.getCustomName();
+                                            if (tag == null) {
+                                                e.remove();
+                                                count++;
+                                            }
+                                        }
                                     }
                                 }
                             }
+                            player.sendMessage(getMessage("blended-entities").replace("%amount", count + "").replace("%entity", animal));
+                            return true;
+                        } else {
+                            sender.sendMessage(getMessage("no-permission-entity"));
                         }
                     }
-                    player.sendMessage("You have blended " + count + " " + animal);
-                    return true;
+                } else {
+                    sender.sendMessage(getMessage("no-permission"));
                 }
             } else {
-                sender.sendMessage("You must be a player to use this command!");
+                sender.sendMessage(getMessage("player-only-command"));
                 return true;
             }
         }
-
-        return false;
+        return true;
     }
 }
