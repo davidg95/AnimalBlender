@@ -5,12 +5,11 @@
  */
 package io.github.davidg95.animalblender;
 
+import java.util.LinkedList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
-import org.bukkit.Location;
-
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.permissions.Permission;
@@ -72,42 +71,29 @@ public class AnimalBlender extends JavaPlugin {
                             if (type == EntityType.PLAYER) {
                                 player.sendMessage(getMessage("cant-despawn-that-entity"));
                             } else if (player.hasPermission("animalblender.blend." + type.name().toLowerCase())) {
-                                int radius;
                                 //Check a number was entered for the radius
                                 try {
-                                    radius = Integer.parseInt(args[1]);
+                                    int radius = Integer.parseInt(args[1]);
                                     int radiusLimit = getConfig().getInt("max-radius");
                                     if (radius <= 0) {
                                         player.sendMessage(getMessage("greater-than-zero"));
                                     } else if (radius >= radiusLimit && !player.hasPermission(radiusBypass) && radiusLimit > 0) {
                                         player.sendMessage(getMessage("radius-to-large"));
                                     } else {
-                                        List<Entity> entities = player.getWorld().getEntities();
+                                        List<LivingEntity> entities = player.getWorld().getLivingEntities();
 
                                         int count = 0;
 
-                                        //Check which animal was entered
-                                        for (Entity e : entities) {
+                                        //Loop through all the living entities
+                                        for (LivingEntity e : entities) {
+                                            //Check it is the type the user entered
                                             if (e.getType() == type) {
-                                                Location entityLocation = e.getLocation();
-                                                Location playerLocation = player.getLocation();
-
-                                                int squidX = entityLocation.getBlockX();
-                                                int squidY = entityLocation.getBlockY();
-
-                                                int playerX = playerLocation.getBlockX();
-                                                int playerY = playerLocation.getBlockY();
-
-                                                int xDif = squidX - playerX;
-                                                int yDif = squidY - playerY;
-
-                                                if (xDif >= -radius && xDif <= radius) {
-                                                    if (yDif >= -radius && yDif <= radius) {
-                                                        String tag = e.getCustomName();
-                                                        if (tag == null) {
-                                                            e.remove();
-                                                            count++;
-                                                        }
+                                                //Check is is within the radius
+                                                if (player.getLocation().distance(e.getLocation()) <= radius) {
+                                                    String tag = e.getCustomName();
+                                                    if (tag == null || (args.length == 3 && args[2].equalsIgnoreCase("--ignoretag"))) {
+                                                        e.setHealth(0);
+                                                        count++;
                                                     }
                                                 }
                                             }
@@ -137,5 +123,18 @@ public class AnimalBlender extends JavaPlugin {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        List<String> toReturn = new LinkedList<>();
+        if (args.length == 1) {
+            for (EntityType type : EntityType.values()) {
+                if (type.name().toLowerCase().startsWith(args[0].toLowerCase())) {
+                    toReturn.add(type.name());
+                }
+            }
+        }
+        return toReturn;
     }
 }
